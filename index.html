@@ -2,187 +2,73 @@
 <html> <!-- język w którym piszemy-->
 <head>  <!-- głowa początek -->
   <meta charset="utf-8" />  <!-- strony kodowania -->
-  <link rel="import"
-      href="bower_components/polymer-ui-clock/polymer-ui-clock.html">
-  <polymer-element name="polymer-ui-clock">
-  <template>
-    <link rel="stylesheet" href="polymer-ui-clock.css">
-    <div id="widget-title">{{ dateStr }}</div>
-    <div id="clock">
-      <div id="second" style="-webkit-transform: translate3d({{xSecond}}px,{{ySecond}}px,0) rotate({{rotateSecond}}deg);"></div>
-      <div id="minute" style="-webkit-transform: translate3d({{xMinute}}px,{{yMinute}}px,0) rotate({{rotateMinute}}deg);"></div>
-      <div id="hour" style="-webkit-transform: translate3d({{xHour}}px,{{yHour}}px,0) rotate({{rotateHour}}deg);"></div>
-      <!-- <div id="dot"></div> -->
-    </div>
-    <div id="time">{{ time }}</div>
-  </template>
-  <script>
-    (function() {
-      Polymer('polymer-ui-clock', {
-        // note: properties only used in MDV bindings need not be declared (xSecond, ySecond, rotateSecond, etc.)
-        // properties that need observation (e.g. we observe 'time' via 'timeChanged') must be declared
-        time: null,
-        dateStr: '',
-        seconds: -1,
-        minutes: -1,
-        hours: -1,
-        enteredView: function() {
-          // when we are inserted into DOM, start watching the time
-          this.updateTime();
-          this.interval = setInterval(this.updateTime.bind(this), 1000);
-        },
-        removed: function() {
-          // when we are removed from DOM, stop watching the time
-          clearInterval(this.interval);
-        },
-        updateTime: function() {
-          // get a current dateTime
-          this.time = new Date();
-        },
-        timeChanged: function() {
-          // if the time has changed, update the dateStr, hours, minutes, and seconds
-          this.dateStr = [
-            days[this.time.getDay()],
-            months[this.time.getMonth()],
-            this.time.getDate()
-          ].join(' ');
-          this.hours = this.time.getHours();
-          this.minutes = this.time.getMinutes();
-          this.seconds = this.time.getSeconds();
-        },
-        secondsChanged: function() {
-          // if seconds have changed, update the clock second hand
-          this.rotateSecond = this.seconds * 6;
-          var px = 1;
-          var py = 50;
-          px = px - 49 * Math.sin(this.rotateSecond * degToRad);
-          py = py + 49 * Math.cos(this.rotateSecond * degToRad);
-          this.xSecond = 99 - px;
-          this.ySecond = 99 - py;
-        },
-        minutesChanged: function() {
-          // if minutes have changed, update the clock minute hand
-          this.rotateMinute = this.minutes * 6;
-          var px = 2;
-          var py = 46;
-          px = px - 44 * Math.sin(this.rotateMinute * degToRad);
-          py = py + 44 * Math.cos(this.rotateMinute * degToRad);
-          this.xMinute = 99 - px;
-          this.yMinute = 99 - py;
-        },
-        hoursChanged: function() {
-          // if hours have changed, update the clock hour hand
-          this.rotateHour = this.hours * 30;
-          var px = 3;
-          var py = 41;
-          px = px - 38*Math.sin(this.rotateHour * degToRad);
-          py = py + 38*Math.cos(this.rotateHour * degToRad);
-          this.xHour = 99 - px;
-          this.yHour = 99 - py;
-        }
-      });
-      // statics
-      var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      var degToRad = Math.PI / 180;
-    })();
-  </script>
-</polymer-element>
-
-  <title>Samouczek html</title> <!-- tytuł po którym Google wyszukuje wyniki-->
-</head> <!-- głowa koniec -->
-<body bgcolor="FF9911">  <!-- ciało - tu umieszczamy wszystko co ma sie wyswietlać -->
-  Podstawowymi elementami języka HTML są znaczniki. Znacznik zwykle rozpoczyna się znacznikiem otwierającym (np. < nazwa-znacznika>), a kończy znacznikiem zamykającym (np. < /nazwa-znacznika>). Atrybuty elementu są zawarte w znaczniku otwierającym (po nazwie znacznika), zawartość umieszczana jest pomiędzy znacznikiem otwierającym i zamykającym<br />
-  <p align="center"><b> < nazwa-znacznika atrybut="wartość">zawartość< /nazwa-znacznika></b></p>
-  <h1 id="heading1" align="center"> <font color="519548"> SAMOUCZEK HTML </font></h1> <!-- nagłówek -->
   
-  Powyższy <b>nagłówek</b> można stworzyć przez znacznik <b>h1</b> (o kolorze i wypośrodkowaniu tekstu nieco później)
-  
-	  <h2 align="center"><font color="519548">Przez znacznik h2 uzyskujemy podtytuł może ich być do h6</font></h2>
-  
-    <p>Używając znacznika <b>p</b> wpisywany tekst wyświetla się <b>od nowego akapitu</b> </p> <!--paragraf czyli nowy akapit-->
-      
-	 <i>Znacznik <b>i</b> sprawia, że wpisywany tekst jest <b>pochylony</b></i>  <br /> 
-  <br /> 
-  Znacznik <b>br ze spacją i /</b> wymusza <b>koniec linii</b>  <br />
-  <br />
-     <b>Znacznik b sprawia, że tekst jest pogrubiony</b>  <br />
-  <br />
-  <b><i>Znaczniki b i i połączone ze sobą dają tekst pogrubiony i pochylony </i>  </b> <br />
-  <p align="center">Wypośrodkowanie tekstu uzyskamy nadając znacznikowi atrybut align="center"</p>
-  <small><b>Małe litery</b> piszemy używając znacznika <b>small</b></small> <br />  
-  <br />
-
-    Znacznik <b>ul</b> tworzy <b>liste nieuporządkowaną</b> przy czym kolejne linijki tekstu piszemy w znacznikach <b>li</b> od list item
-  <ul>
-	  <li>Pierwszy element listy</li>
-	  <li>Drugi element listy</li>
-  </ul>
-  Znacznik <b>ol</b> tworzy <b>liste uporządkowaną</b>, a kolejne linijki tekstu piszemy rowniez w znaczniku <b>li</b>
-  <ol>
-	  <li>Pierwszy element listy</li>
-	  <li>Drugi element listy</li>
-	</ol>
-  
-W HTML można <b>zmieniać kolor tła wiersza</b> (takie zakreślanie) przez zastosowanie atrybutów takich jak <b>style = background:kolor</b> (pisząc to bez spacji) i ujmując w paragraf :<br />
-  
-  <p style=background:#ffffff>Białe tło</p>
-  <p style=background:#000000><font color="white">Czarne tło - Biały tekst - uzyskujemy przez znacznik font atrybut color="white" - w tym przypadku</font></p>
-  <p style=background:#ff0000>Czerwone tło</p>
-  <p style=background:#0000ff><font color="yellow">Niebieskie tło</font></p>
-  <p style=background:#00ff00>Zielone tło</p>
-  <p style=background:#ffff00>Żółte tło</p>
-  <br />
-Oczywiście łatwiej to wszystko zrobić w CSSie, ale dobrze wiedzieć, że HTML też daje taką możliwość <br />
-  <br />
-  Aby utworzyć <b>link do strony</b> używamy następującej formuły:<br />
-  <br />
-  <b>< a href = "adres strony"> </b>nie zapomnijmy o zamknięciu znacznika <b>< /a ></b> <br />
-  <br />
-
-  Element <b> a </b> oznacza "anchor", czyli kotwica. Natomiast atrybut <b>href</b> jest skrótem od "hypertext reference", czyli odnośnik hyper tekstowy, określający dokąd prowadzi odnośnik - najczęściej adres pliku w internecie.
-  <a href="http://pl.html.net/tutorials/html/"><br /><b>Tutorial, z którego korzystałam</b></a><br />
-  <br />
-    Odnośniki można tworzyć również do innych składnikow "ciała" strony np. do nagłówka
-  <br />
-  <a href="#heading1"><b>Odnośnik do nagłówka</b></a><br />
-  <br />
-  <p align="left"><b>Umieszczanie obrazków</b> na stronie internetowej:  <br />
-  <br />
-<center><img src="http://www.html4all.org/wiki/images/4/4c/HTML4ALL_logo10.jpg" width="600" height="300" style="margin-top: 10px"; title="Ucz się języka HTML"/><br />
-  <br /> 
-    <p align="left">Jedyne co musisz zrobić to powiedzieć przeglądarce, że chcesz umieścić obrazek (img) i gdzie obrazek jest zlokalizowany (src, skrót do "Źródła").<br />
-      Istnieją trzy różne typy plików obrazków, które możesz umieścić na stronie:
-<ul>
-  <li align="left">GIF (Graphics Interchange Format)</li>
-  <li align="left">JPG / JPEG (Joint Photographic Experts Group)</li>
-  <li align="left">PNG (Portable Network Graphics)</li>
-</ul>
-  <p align="left">W nawiasie trójkątnym należy umieścić następujące wyrażenie: <br />
-  <br />
-  <b>img src="nazwa.jpg" lub "link do obrazka zamieszczonego na stronie internetowej"</b><br />
-  <br />
-  Wiele właciwości grafiki można ustawić za pomocą następujących atrybutów (podstawowe z nich to):
-  <ul>
-  <li align="left">szerokość <b>width="ilość pixeli"</b> </li>
-  <li align="left">wysokość <b>height="ilość pixeli"</b></li>
-  <li align="left">margines górny <b>style="margin-top:"ilość pixeli"</b>, analogicznie margines dolny - <b>margin-bottom</b>, margines lewy - <b>margin-left</b> oraz prawy - <b>margin-right</b></li>
-  <li align="left">tytuł, który ukaże się po wskazaniu obrazka przez myszkę <b>title="nazwa"</b>  
-  </ul> 
-  </p>   
- <p align="left"> Co ciekawe <b>obrazek może być również odnośnikiem do strony internetowej.</b> Wystarczy tylko w znanej już nam formule < a href > umieścić do niego link i otrzymujemy efekt jak poniżej:</p>
-<a href="http://slid.es/mtyde/dyniowe-inspiracje-kulinarne">
-  <center><img src="http://cdn30.mowimyjak.smcloud.net/t/photos/t/16844/dynia-jaka-do-jedzenia-jaka-do-ozdoby_385229.jpg" title="Zobacz prezentację Dyniowe Inspiracje Kulinarne"/></a>
-  <a href="http://profil.wp.pl/login.html?url=http%3A%2F%2Fpoczta.wp.pl%2Findexgwt.html%3Fflg%3D1&serwis=nowa_poczta_wp">
-    <center><img src="http://s1.blomedia.pl/gadzetomania.pl/images/2009/06/koperta.jpg" width="50" height="50" title="Sprawdź pocztę !" target="_blank"/></a>
-    
-
-   
-   
  
-   <p align="left">Poziomą linię uzyskujemy znacznikiem <b>hr spacja /</b> właśnie tak</p>
-  <hr />
-  <p align="center"><small> <b>wykonała Magdalena Tyde</b></small></p>
+
+  <title>Magdalena Tyde - strona internetowa</title> <!-- tytuł po którym Google wyszukuje wyniki-->
+</head> <!-- głowa koniec -->
+<body bgcolor="FBF7BB">  <!-- ciało - tu umieszczamy wszystko co ma sie wyswietlać -->
+ 
+  <p align="left"> 
+    <SCRIPT LANGUAGE="JavaScript">
+miesiac = new Array(12)
+miesiac[0] = "stycznia "
+miesiac[1] = "lutego "
+miesiac[2] = "marca "
+miesiac[3] = "kwietnia "
+miesiac[4] = "maja "
+miesiac[5] = "czerwca "
+miesiac[6] = "lipca "
+miesiac[7] = "sierpnia "
+miesiac[8] = "września "
+miesiac[9] = "października "
+miesiac[10] = "listopada "
+miesiac[11] = "grudnia "
+dzien = new Array(7)
+dzien[0] = "niedziela "
+dzien[1] = "poniedziałek "
+dzien[2] = "wtorek "
+dzien[3] = "środa "
+dzien[4] = "czwartek "
+dzien[5] = "piątek "
+dzien[6] = "sobota "
+function podaj_date(){
+var Dzisiaj = new Date()
+var Tygodnia = Dzisiaj.getDay()
+var Miesiac = Dzisiaj.getMonth()
+var Dnia = Dzisiaj.getDate()
+var Rok = Dzisiaj.getFullYear()
+if(Rok <= 99) Rok += 1900
+return dzien[Tygodnia] + "," + " " + Dnia + " " + miesiac[Miesiac] + " " + Rok +"r." }
+
+</SCRIPT>
+<SCRIPT >  document.write("Dziś jest " + podaj_date())</SCRIPT>
+  </p> 
+  <p align="right">
+     <a href="http://profil.wp.pl/login.html?url=http%3A%2F%2Fpoczta.wp.pl%2Findexgwt.html%3Fflg%3D1&serwis=nowa_poczta_wp">
+  <img src="http://s1.blomedia.pl/gadzetomania.pl/images/2009/06/koperta.jpg" width="50" height="50" title="Sprawdź pocztę" target="_blank"/></a>
+     <a href="http://www.filmweb.pl">
+  <img src="https://pbs.twimg.com/profile_images/445859115747647488/QQHdGAKU_bigger.png" width="50" height="50" title="Filmy i seriale" target="_blank"/></a>
+  <a href="http://multikino.pl/pl/w-kinie/#">
+  <img src="https://pbs.twimg.com/profile_images/1127509295/logo_multikino_bigger.jpg" width="50" height="50" title="Co jest grane" target="_blank"/></a>
+  <a href="http://www.matras.pl/?gclid=CjgKEAjwzIucBRDzjIz9qMOB3TASJABBIwL1kXNJogHLi1p5kRcFGRm8u_a0Y9xGa4YaD3CVtYA0n_D_BwE">
+  <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTvVzoi4nl5vfdU5Q5hDFSk-eU69Yk-mzApVHfPqp3MWCQ-7xc6SyMC4-6Z" width="50" height="50" title="Dla moli książkowych" target="_blank"/></a>
+  <a href="http://nocoty.pl/?ticaid=512cb7">
+  <img src="data:image/jpeg;base64,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" width="50" height="50" title="Showbiz plotki" target="_blank"/></a>
+  <a href="http://www.youtube.com/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQNf2doZ6DEcMTTb57iccLpPTwvcFeGY38bFYPTGdeHWYW5sdlXw" width="50" height="50" title="Youtube po prostu" target="_blank"/></a>
+  <a href="https://www.google.pl/">
+  <img src="data:image/jpeg;base64,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" width="50" height="50" title="Ulubiona wyszukiwarka" target="_blank"/></a>
+    <a href="https://github.com/">
+  <img src="data:image/jpeg;base64,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" width="50" height="50" title="Sprawdź pocztę" target="_blank"/></a>
+  
+  </p>
+  <br/>
+  <br/>
+  
+  <h1 id="heading1" align="center"> <font color="519548"> MAGDALENA TYDE </font></h1>
+ 
+  <h2 align="center"><font color="519548">strona internetowa</font></<p align="center"><small> <b>wykonała Magdalena Tyde</b></small></p>
 </body>
 </html>
     <!-- FOOTER  -->
