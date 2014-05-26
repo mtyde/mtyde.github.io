@@ -1,66 +1,190 @@
 <!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Mtyde.github.io : " />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Mtyde.github.io</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/mtyde">View on GitHub</a>
-
-          <h1 id="project_title">Mtyde.github.io</h1>
-          <h2 id="project_tagline"></h2>
-
-        </header>
+<html> <!-- język w którym piszemy-->
+<head>  <!-- głowa początek -->
+  <meta charset="utf-8" />  <!-- strony kodowania -->
+  <link rel="import"
+      href="bower_components/polymer-ui-clock/polymer-ui-clock.html">
+  <polymer-element name="polymer-ui-clock">
+  <template>
+    <link rel="stylesheet" href="polymer-ui-clock.css">
+    <div id="widget-title">{{ dateStr }}</div>
+    <div id="clock">
+      <div id="second" style="-webkit-transform: translate3d({{xSecond}}px,{{ySecond}}px,0) rotate({{rotateSecond}}deg);"></div>
+      <div id="minute" style="-webkit-transform: translate3d({{xMinute}}px,{{yMinute}}px,0) rotate({{rotateMinute}}deg);"></div>
+      <div id="hour" style="-webkit-transform: translate3d({{xHour}}px,{{yHour}}px,0) rotate({{rotateHour}}deg);"></div>
+      <!-- <div id="dot"></div> -->
     </div>
+    <div id="time">{{ time }}</div>
+  </template>
+  <script>
+    (function() {
+      Polymer('polymer-ui-clock', {
+        // note: properties only used in MDV bindings need not be declared (xSecond, ySecond, rotateSecond, etc.)
+        // properties that need observation (e.g. we observe 'time' via 'timeChanged') must be declared
+        time: null,
+        dateStr: '',
+        seconds: -1,
+        minutes: -1,
+        hours: -1,
+        enteredView: function() {
+          // when we are inserted into DOM, start watching the time
+          this.updateTime();
+          this.interval = setInterval(this.updateTime.bind(this), 1000);
+        },
+        removed: function() {
+          // when we are removed from DOM, stop watching the time
+          clearInterval(this.interval);
+        },
+        updateTime: function() {
+          // get a current dateTime
+          this.time = new Date();
+        },
+        timeChanged: function() {
+          // if the time has changed, update the dateStr, hours, minutes, and seconds
+          this.dateStr = [
+            days[this.time.getDay()],
+            months[this.time.getMonth()],
+            this.time.getDate()
+          ].join(' ');
+          this.hours = this.time.getHours();
+          this.minutes = this.time.getMinutes();
+          this.seconds = this.time.getSeconds();
+        },
+        secondsChanged: function() {
+          // if seconds have changed, update the clock second hand
+          this.rotateSecond = this.seconds * 6;
+          var px = 1;
+          var py = 50;
+          px = px - 49 * Math.sin(this.rotateSecond * degToRad);
+          py = py + 49 * Math.cos(this.rotateSecond * degToRad);
+          this.xSecond = 99 - px;
+          this.ySecond = 99 - py;
+        },
+        minutesChanged: function() {
+          // if minutes have changed, update the clock minute hand
+          this.rotateMinute = this.minutes * 6;
+          var px = 2;
+          var py = 46;
+          px = px - 44 * Math.sin(this.rotateMinute * degToRad);
+          py = py + 44 * Math.cos(this.rotateMinute * degToRad);
+          this.xMinute = 99 - px;
+          this.yMinute = 99 - py;
+        },
+        hoursChanged: function() {
+          // if hours have changed, update the clock hour hand
+          this.rotateHour = this.hours * 30;
+          var px = 3;
+          var py = 41;
+          px = px - 38*Math.sin(this.rotateHour * degToRad);
+          py = py + 38*Math.cos(this.rotateHour * degToRad);
+          this.xHour = 99 - px;
+          this.yHour = 99 - py;
+        }
+      });
+      // statics
+      var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var degToRad = Math.PI / 180;
+    })();
+  </script>
+</polymer-element>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+  <title>Samouczek html</title> <!-- tytuł po którym Google wyszukuje wyniki-->
+</head> <!-- głowa koniec -->
+<body bgcolor="FF9911">  <!-- ciało - tu umieszczamy wszystko co ma sie wyswietlać -->
+  Podstawowymi elementami języka HTML są znaczniki. Znacznik zwykle rozpoczyna się znacznikiem otwierającym (np. < nazwa-znacznika>), a kończy znacznikiem zamykającym (np. < /nazwa-znacznika>). Atrybuty elementu są zawarte w znaczniku otwierającym (po nazwie znacznika), zawartość umieszczana jest pomiędzy znacznikiem otwierającym i zamykającym<br />
+  <p align="center"><b> < nazwa-znacznika atrybut="wartość">zawartość< /nazwa-znacznika></b></p>
+  <h1 id="heading1" align="center"> <font color="519548"> SAMOUCZEK HTML </font></h1> <!-- nagłówek -->
+  
+  Powyższy <b>nagłówek</b> można stworzyć przez znacznik <b>h1</b> (o kolorze i wypośrodkowaniu tekstu nieco później)
+  
+	  <h2 align="center"><font color="519548">Przez znacznik h2 uzyskujemy podtytuł może ich być do h6</font></h2>
+  
+    <p>Używając znacznika <b>p</b> wpisywany tekst wyświetla się <b>od nowego akapitu</b> </p> <!--paragraf czyli nowy akapit-->
+      
+	 <i>Znacznik <b>i</b> sprawia, że wpisywany tekst jest <b>pochylony</b></i>  <br /> 
+  <br /> 
+  Znacznik <b>br ze spacją i /</b> wymusza <b>koniec linii</b>  <br />
+  <br />
+     <b>Znacznik b sprawia, że tekst jest pogrubiony</b>  <br />
+  <br />
+  <b><i>Znaczniki b i i połączone ze sobą dają tekst pogrubiony i pochylony </i>  </b> <br />
+  <p align="center">Wypośrodkowanie tekstu uzyskamy nadając znacznikowi atrybut align="center"</p>
+  <small><b>Małe litery</b> piszemy używając znacznika <b>small</b></small> <br />  
+  <br />
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+    Znacznik <b>ul</b> tworzy <b>liste nieuporządkowaną</b> przy czym kolejne linijki tekstu piszemy w znacznikach <b>li</b> od list item
+  <ul>
+	  <li>Pierwszy element listy</li>
+	  <li>Drugi element listy</li>
+  </ul>
+  Znacznik <b>ol</b> tworzy <b>liste uporządkowaną</b>, a kolejne linijki tekstu piszemy rowniez w znaczniku <b>li</b>
+  <ol>
+	  <li>Pierwszy element listy</li>
+	  <li>Drugi element listy</li>
+	</ol>
+  
+W HTML można <b>zmieniać kolor tła wiersza</b> (takie zakreślanie) przez zastosowanie atrybutów takich jak <b>style = background:kolor</b> (pisząc to bez spacji) i ujmując w paragraf :<br />
+  
+  <p style=background:#ffffff>Białe tło</p>
+  <p style=background:#000000><font color="white">Czarne tło - Biały tekst - uzyskujemy przez znacznik font atrybut color="white" - w tym przypadku</font></p>
+  <p style=background:#ff0000>Czerwone tło</p>
+  <p style=background:#0000ff><font color="yellow">Niebieskie tło</font></p>
+  <p style=background:#00ff00>Zielone tło</p>
+  <p style=background:#ffff00>Żółte tło</p>
+  <br />
+Oczywiście łatwiej to wszystko zrobić w CSSie, ale dobrze wiedzieć, że HTML też daje taką możliwość <br />
+  <br />
+  Aby utworzyć <b>link do strony</b> używamy następującej formuły:<br />
+  <br />
+  <b>< a href = "adres strony"> </b>nie zapomnijmy o zamknięciu znacznika <b>< /a ></b> <br />
+  <br />
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+  Element <b> a </b> oznacza "anchor", czyli kotwica. Natomiast atrybut <b>href</b> jest skrótem od "hypertext reference", czyli odnośnik hyper tekstowy, określający dokąd prowadzi odnośnik - najczęściej adres pliku w internecie.
+  <a href="http://pl.html.net/tutorials/html/"><br /><b>Tutorial, z którego korzystałam</b></a><br />
+  <br />
+    Odnośniki można tworzyć również do innych składnikow "ciała" strony np. do nagłówka
+  <br />
+  <a href="#heading1"><b>Odnośnik do nagłówka</b></a><br />
+  <br />
+  <p align="left"><b>Umieszczanie obrazków</b> na stronie internetowej:  <br />
+  <br />
+<center><img src="http://www.html4all.org/wiki/images/4/4c/HTML4ALL_logo10.jpg" width="600" height="300" style="margin-top: 10px"; title="Ucz się języka HTML"/><br />
+  <br /> 
+    <p align="left">Jedyne co musisz zrobić to powiedzieć przeglądarce, że chcesz umieścić obrazek (img) i gdzie obrazek jest zlokalizowany (src, skrót do "Źródła").<br />
+      Istnieją trzy różne typy plików obrazków, które możesz umieścić na stronie:
+<ul>
+  <li align="left">GIF (Graphics Interchange Format)</li>
+  <li align="left">JPG / JPEG (Joint Photographic Experts Group)</li>
+  <li align="left">PNG (Portable Network Graphics)</li>
+</ul>
+  <p align="left">W nawiasie trójkątnym należy umieścić następujące wyrażenie: <br />
+  <br />
+  <b>img src="nazwa.jpg" lub "link do obrazka zamieszczonego na stronie internetowej"</b><br />
+  <br />
+  Wiele właciwości grafiki można ustawić za pomocą następujących atrybutów (podstawowe z nich to):
+  <ul>
+  <li align="left">szerokość <b>width="ilość pixeli"</b> </li>
+  <li align="left">wysokość <b>height="ilość pixeli"</b></li>
+  <li align="left">margines górny <b>style="margin-top:"ilość pixeli"</b>, analogicznie margines dolny - <b>margin-bottom</b>, margines lewy - <b>margin-left</b> oraz prawy - <b>margin-right</b></li>
+  <li align="left">tytuł, który ukaże się po wskazaniu obrazka przez myszkę <b>title="nazwa"</b>  
+  </ul> 
+  </p>   
+ <p align="left"> Co ciekawe <b>obrazek może być również odnośnikiem do strony internetowej.</b> Wystarczy tylko w znanej już nam formule < a href > umieścić do niego link i otrzymujemy efekt jak poniżej:</p>
+<a href="http://slid.es/mtyde/dyniowe-inspiracje-kulinarne">
+  <center><img src="http://cdn30.mowimyjak.smcloud.net/t/photos/t/16844/dynia-jaka-do-jedzenia-jaka-do-ozdoby_385229.jpg" title="Zobacz prezentację Dyniowe Inspiracje Kulinarne"/></a>
+  <a href="http://profil.wp.pl/login.html?url=http%3A%2F%2Fpoczta.wp.pl%2Findexgwt.html%3Fflg%3D1&serwis=nowa_poczta_wp">
+    <center><img src="http://s1.blomedia.pl/gadzetomania.pl/images/2009/06/koperta.jpg" width="50" height="50" title="Sprawdź pocztę !" target="_blank"/></a>
+    
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
+   
+   
+ 
+   <p align="left">Poziomą linię uzyskujemy znacznikiem <b>hr spacja /</b> właśnie tak</p>
+  <hr />
+  <p align="center"><small> <b>wykonała Magdalena Tyde</b></small></p>
+</body>
+</html>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
